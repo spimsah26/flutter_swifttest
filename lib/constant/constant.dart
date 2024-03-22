@@ -5,6 +5,11 @@ class Constant{
   static String routeMainMenu ='/mainmenu';
   static String routeUserPage ='/user_page';
    static String routeUserDetail ='/user_detail';
+    static String routeDartTestMain ='/darttestmain';
+    static String routeDartTest1 ='/darttest1';
+    static String routeDartTest2 ='/darttest2';
+    static String routeDartTest3 ='/darttest3';
+    static String routeDartTest4 ='/darttest4';
 
    static   showMsgAlertDialog(String title,String content,BuildContext context){
     print('alert msg $title');

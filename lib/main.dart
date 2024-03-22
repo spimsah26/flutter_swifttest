@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swifttest/constant/constant.dart';
+import 'package:flutter_swifttest/darttest1.dart';
+import 'package:flutter_swifttest/darttest2.dart';
+import 'package:flutter_swifttest/darttest3.dart';
+import 'package:flutter_swifttest/darttest4.dart';
+import 'package:flutter_swifttest/darttestmainmenu.dart';
 import 'package:flutter_swifttest/helper/helper.dart';
 import 'package:flutter_swifttest/helper/readjson.dart';
 import 'package:flutter_swifttest/mainmenu.dart';
@@ -43,6 +48,11 @@ class MyApp extends StatelessWidget {
       home: const MainMenu(title: 'Home Page'), 
       routes: <String, WidgetBuilder> {
       Constant.routeUserPage: (BuildContext context) => UserPage(title: 'ข้อมูลบุคคล'),
+      Constant.routeDartTestMain: (BuildContext context) => DartTestMainMenu(title: 'แบบทดสอบภาษา Dart'),
+      Constant.routeDartTest1: (BuildContext context) => DartTest1(title: 'แบบทดสอบภาษา Dart 1.'),
+       Constant.routeDartTest2: (BuildContext context) => DartTest2(title: 'แบบทดสอบภาษา Dart 2.'),
+        Constant.routeDartTest3: (BuildContext context) => DartTest3(title: 'แบบทดสอบภาษา Dart 3.'),
+         Constant.routeDartTest4: (BuildContext context) => DartTest4(title: 'แบบทดสอบภาษา Dart 4.'),
      
     },
    

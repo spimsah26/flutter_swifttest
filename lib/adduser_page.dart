@@ -23,6 +23,7 @@ class _AddUserPage extends State<AddUserPage> {
    int _index = 0;
    late AutoCompleteTextField searchTextField;
    GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
+     GlobalKey<AutoCompleteTextFieldState<String>> key2 = GlobalKey();
    
 
    final nameController = TextEditingController();
@@ -88,20 +89,32 @@ class _AddUserPage extends State<AddUserPage> {
 
    
     ReadJsonHelper? readJsonObj ;
+
+getProvincesData()async{
+  searchSuggess = [];
+  //sugg = [];
+   readJsonObj = ReadJsonHelper();
+    searchSuggess = await readJsonObj!.getProvincesSuggess();
+    
+    //print('setProvince obj${readJsonObj!.searchSuggess}');
+     print('setProvince $sugg');
+    print('setProvince $searchSuggess');
+   
+
+   
+    setState(() {
+    // sugg =searchSuggess;
+      
+    });
+}
+
    @override
   void initState() {
     // TODO: implement initState
-    readJsonObj = ReadJsonHelper();
-   
-
-    searchSuggess = readJsonObj!.searchSuggess;
-    setState(() {
-     
-      
-    });
+   getProvincesData();
 
     
-      print('tambon all ${readJsonObj!.searchSuggess}');
+     
     super.initState();
   }
 
@@ -121,6 +134,8 @@ class _AddUserPage extends State<AddUserPage> {
          postcodeController.dispose();
     super.dispose();
   }
+
+  List<String>sugg =['10200/พระบรมมหาราชวัง/เขตพระนคร/กรุงเทพมหานคร', '10200/วังบูรพาภิรมย์/เขตพระนคร/กรุงเทพมหานคร', '10200/วัดราชบพิธ/เขตพระนคร/กรุงเทพมหานคร', '10200/สำราญราษฎร์/เขตพระนคร/กรุงเทพมหานคร',];
   
 
 
@@ -147,30 +162,11 @@ class _AddUserPage extends State<AddUserPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(widget.title),
+           // Text(widget.title),
               //Text(readJsonObj!.searchSuggess[0]),
 
             
-            //  AutoCompleteTextField<String>(
-            //   key: key,
-            //   suggestions: readJsonObj!.searchSuggess,
-            //   style: TextStyle(fontSize: 16.0),
-            //   keyboardType: TextInputType.number,
-            //   decoration: InputDecoration(
-            //     hintText: 'รหัสไปรษณีย์',
-            //     border: OutlineInputBorder(),
-                
-            //   ),
-            //   itemBuilder: (context, suggestion) => ListTile(
-            //     title: Text(suggestion),
-            //   ),
-            //   itemFilter: (suggestion, input) =>
-            //       suggestion.toLowerCase().startsWith(input.toLowerCase()),
-            //   itemSorter: (a, b) => a.compareTo(b),
-            //   itemSubmitted: (item) {
-               
-            //   },
-            // ),
+         
 
             
 
@@ -198,7 +194,7 @@ class _AddUserPage extends State<AddUserPage> {
           // print('read province provider ${readJsonHelper.ProvinceList[0].amphure?[0].nameTh}');
           // // ignore: avoid_print
           // print('read suggess provider ${readJsonHelper.searchSuggess.length}');
-           print('continue tambon all ${readJsonObj!.searchSuggess.length}');
+           print('continue tambon all ${searchSuggess.length}');
           setState(() {
             _index += 1;
           });
@@ -264,11 +260,11 @@ class _AddUserPage extends State<AddUserPage> {
               children: [
                 inputText(addressController,'ที่อยู่',TextInputType.text),
 
-                  searchTextField = AutoCompleteTextField<String>(
+               AutoCompleteTextField<String>(
                 key: key,
                 
                 clearOnSubmit: false,
-                suggestions: readJsonObj!.searchSuggess,
+                suggestions: searchSuggess,
                 keyboardType: TextInputType.number,
                 controller: postcodeController,
                 decoration: InputDecoration(
@@ -283,13 +279,13 @@ class _AddUserPage extends State<AddUserPage> {
                   return a.compareTo(b);
                 },
                 itemSubmitted: (item) {
-                  setState(() {
-                    zip_code = item;
-                      postcodeController.text = item.split('/')[0];
-                      provinceController.text = item.split('/')[1];
-                      aumpherController.text = item.split('/')[2];
-                      tumbonController.text = item.split('/')[3];
-                  });
+                  // setState(() {
+                  //   //zip_code = item;
+                  //     postcodeController.text = item.split('/')[0];
+                  //     provinceController.text = item.split('/')[1];
+                  //     aumpherController.text = item.split('/')[2];
+                  //     tumbonController.text = item.split('/')[3];
+                  // });
                 },
                 itemBuilder: (context, item) {
                   return ListTile(

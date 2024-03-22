@@ -1,10 +1,12 @@
 
 // ignore_for_file: sort_child_properties_last, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_swifttest/constant/constant.dart';
 import 'package:flutter_swifttest/helper/helper.dart';
+import 'package:flutter_swifttest/helper/readjson.dart';
 import 'package:flutter_swifttest/model/usermodel.dart';
 import 'package:flutter_swifttest/userdatailpage.dart';
 import 'package:provider/provider.dart';
@@ -22,16 +24,35 @@ class AllUserPage extends StatefulWidget {
 class _AllUserPage extends State<AllUserPage> {
   //  int _index = 0;
     List<UserModel> allUserList = [];
+     GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
    
 
  
 
+ ReadJsonHelper? readJsonObj ;
+  List<String> searchSuggess = [];
+ getProvincesData()async{
+  searchSuggess = [];
+  //sugg = [];
+   readJsonObj = ReadJsonHelper();
+    searchSuggess = await  readJsonObj!.getOnlyProvincesSuggess();
+    
+ 
+   
+    print('all user get Province $searchSuggess');
+   
 
+   
+    setState(() {
+    // sugg =searchSuggess;
+      
+    });
+}
 
 @override
   void initState() {
     // TODO: implement initState
-    // showData();
+   getProvincesData();
     
 
     super.initState();
@@ -85,7 +106,7 @@ class _AllUserPage extends State<AllUserPage> {
    
 
 
-
+String _selectedItem ='';
 
 
   @override
@@ -105,13 +126,28 @@ class _AllUserPage extends State<AllUserPage> {
       // SingleChildScrollView(
       //   child:
         
-        //  Column(
-        //   children: [
-        //     Text(widget.title),
+         Column(
+          children: [
+        //   Center(
+        //   child: DropdownButton<String>(
+        //     value: _selectedItem,
+        //     items: searchSuggess.map((String value) {
+        //       return DropdownMenuItem<String>(
+        //         value: value,
+        //         child: Text(value),
+        //       );
+        //     }).toList(),
+        //     onChanged: (String? newValue) {
+        //       setState(() {
+        //         _selectedItem = newValue!;
+        //       });
+        //     },
+        //   ),
+        // ),
 
-
-
-  sqLiteHelper.UserModelResponse.isNotEmpty?     
+            SizedBox(
+              height: 600,
+              child: sqLiteHelper.UserModelResponse.isNotEmpty?     
   ListView.builder(
   itemCount: sqLiteHelper.UserModelResponse.length,
   itemBuilder: (BuildContext context, int index) {
@@ -119,8 +155,14 @@ class _AllUserPage extends State<AllUserPage> {
        Column(
             children: [
 
+          
+
+      
+
+
+
               
-            // Text('${allUserList?.length}'),
+            //  Text('${searchSuggess.length}'),
             // Text('${sqLiteHelper.UserModelResponse.length}'),
    ListTile(
               title: Text('${sqLiteHelper.UserModelResponse[index].name} ${sqLiteHelper.UserModelResponse[index].surname}'),
@@ -146,13 +188,17 @@ class _AllUserPage extends State<AllUserPage> {
    
   },
 ):Container(),
+            ),
+
+
+  
 
 
 
 
 
-        //   ],
-        // ),
+          ],
+        ),
    //  )
 
 

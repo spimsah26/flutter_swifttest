@@ -70,7 +70,7 @@ class _MainMenu extends State<MainMenu> {
               if(index == 0) {
                 Navigator.pushNamed(context, Constant.routeUserPage);
               } else {
-                Constant.showMsgAlertDialog('test msg','test dialog',context);
+                 Navigator.pushNamed(context, Constant.routeDartTestMain);
               }
             },
           ),
