@@ -34,8 +34,12 @@ class _AllUserPage extends State<AllUserPage> {
  getProvincesData()async{
   searchSuggess = [];
   //sugg = [];
+
+   await SQLiteHelper().getAllUser();
+    await SQLiteHelper().getUserbyProvince('กรุงเทพมหานคร');
    readJsonObj = ReadJsonHelper();
     searchSuggess = await  readJsonObj!.getOnlyProvincesSuggess();
+    _selectedItem = searchSuggess.first;
     
  
    
@@ -50,8 +54,16 @@ class _AllUserPage extends State<AllUserPage> {
 }
 
 @override
+  void dispose() {
+    // TODO: implement dispose
+    
+    super.dispose();
+  }
+
+@override
   void initState() {
     // TODO: implement initState
+   
    getProvincesData();
     
 
@@ -106,7 +118,7 @@ class _AllUserPage extends State<AllUserPage> {
    
 
 
-String _selectedItem ='';
+String _selectedItem ='แสดงข้อมูลตามจังหวัด';
 
 
   @override
@@ -120,14 +132,46 @@ String _selectedItem ='';
     
     
     Scaffold(
+      resizeToAvoidBottomInset: false,
      
       body: 
       
-      // SingleChildScrollView(
-      //   child:
+      SingleChildScrollView(
+        child:
         
          Column(
           children: [
+
+    //         Container(
+    //           margin: EdgeInsets.all(8),
+    //           width: double.infinity,
+    //           height: 50,
+    //           child: 
+    //          DropdownButton<String>(
+    //   value: _selectedItem,
+    //   icon: const Icon(Icons.arrow_downward),
+    //   elevation: 16,
+    //   style: const TextStyle(color: Colors.deepPurple),
+    //   underline: Container(
+    //     height: 2,
+    //     color: Colors.deepPurpleAccent,
+    //   ),
+    //   onChanged: (String? value) {
+    //     // This is called when the user selects an item.
+    //     setState(() {
+    //       _selectedItem = value!;
+    //     });
+    //   },
+    //   items: searchSuggess.map<DropdownMenuItem<String>>((String value) {
+    //     return DropdownMenuItem<String>(
+    //       value: value,
+    //       child: Text(value),
+    //     );
+    //   }).toList(),
+    // ),
+              
+              
+    //         ),
         //   Center(
         //   child: DropdownButton<String>(
         //     value: _selectedItem,
@@ -198,7 +242,7 @@ String _selectedItem ='';
 
 
           ],
-        ),
+        )),
    //  )
 
 

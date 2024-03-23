@@ -23,6 +23,14 @@ class SQLiteHelper with ChangeNotifier{
   final String columnPostCode ='postcode';
 
   List<UserModel> _UserModelResponse = [];
+   List<UserModel> _UserProvincesModelResponse = [];
+
+  List<UserModel> get UserProvincesModelResponse => _UserProvincesModelResponse;
+
+  set UserProvincesModelResponse(List<UserModel> value) {
+    _UserProvincesModelResponse = value;
+      notifyListeners();
+  }
 
 
   SQLiteHelper(){
@@ -42,7 +50,7 @@ class SQLiteHelper with ChangeNotifier{
     version: version,
     onCreate: (db,version) => db.execute('CREATE TABLE $tableDatabase ($columnId integer primary key autoincrement,$columnName TEXT,$columnSurName TEXT,$columnWeight REAL,$columnAge INTEGER,$columnHeight REAL,$columnAddress TEXT,$columnProvince TEXT,$columnAumpher TEXT,$columnTumbon TEXT,$columnPostCode TEXT)'),
     
-    ).then((value) => getAllUser());
+    ).then((value) => {getAllUser(),getUserbyProvince('กรุงเทพมหานคร')});
   }
 
   Future<Database>connectedDatabase()async {
@@ -67,6 +75,7 @@ class SQLiteHelper with ChangeNotifier{
  UserModelResponse = result;
   print('UserModelResponse 1${_UserModelResponse.first.name}');
       }
+      
      
       
    
@@ -104,6 +113,7 @@ class SQLiteHelper with ChangeNotifier{
    Future<List<UserModel>> getUserbyProvince(String province) async {
     final db = await connectedDatabase();
      List<UserModel> result = []; // อ้างอิงฐานข้อมูล
+     print('query by province ...');
  
     // ทำคำสั่งคิวรี่ข้อมูลตามเงื่อนไข 
     final maps = await db.query(
@@ -123,8 +133,8 @@ class SQLiteHelper with ChangeNotifier{
       //print('get name 1${result.first.name}');
       
       if(result.isNotEmpty){
-       UserModelResponse = result;
-       print('UserModelResponse 1${_UserModelResponse.first.name}');
+       UserProvincesModelResponse = result;
+       print('province UserModelResponse 1${UserProvincesModelResponse.first.name}');
       }
      
     return result;

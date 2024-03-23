@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swifttest/adduser_page.dart';
+import 'package:flutter_swifttest/userfromprovince_page.dart';
 
 import 'alluser_page.dart';
 
@@ -20,6 +21,7 @@ class _UserPage extends State<UserPage> {
 
   static const List<UserMenu> userMenuList = const <UserMenu>[
   const UserMenu(title: 'รายชื่อทั้งหมด', icon: Icons.file_present),
+   const UserMenu(title: 'รายชื่อตามจังหวัด', icon: Icons.file_present),
   const UserMenu(title: 'เพิ่มรายชื่อ', icon: Icons.add_circle),
 
 ];
@@ -50,6 +52,10 @@ class _UserPage extends State<UserPage> {
                 icon: Icon(Icons.list_alt_outlined),
                 text:'รายชื่อทั้งหมด' ,
               ),
+               Tab(
+                icon: Icon(Icons.list_alt_outlined),
+                text: 'รายชื่อตามจังหวัด',
+              ),
               Tab(
                 icon: Icon(Icons.add_circle),
                 text: 'เพิ่มรายชื่อ',
@@ -66,31 +72,19 @@ class _UserPage extends State<UserPage> {
       if(choice.title == 'รายชื่อทั้งหมด'){
         return AllUserPage(title: 'รายชื่อทั้งหมด');
 
-      }else{
+      }else  if(choice.title == 'รายชื่อตามจังหวัด'){
+        return UserFromProvincePage(title: 'รายชื่อตามจังหวัด');
+
+      }
+      
+      else{
          return AddUserPage(title: 'เพิ่มรายชื่อ');
 
       }
            
             }).toList(),
   ),
-// bottomNavigationBar: SafeArea(
 
-//   child: Container(
-//               color: Theme.of(context).primaryColor,
-//               child: TabBar(
-//                 unselectedLabelColor: Colors.black,
-//                 onTap: (index) {
-//                   print("index: ${index}");
-//                 },
-//                 tabs: userMenuList.map((UserMenu choice) {
-//                   return Tab(
-//                     text: choice.title,
-//                     icon: Icon(choice.icon),
-//                   );
-//                 }).toList(),
-//               ),
-//             ),
-// ),
 
     )
 

@@ -46,6 +46,8 @@ class _AddUserPage extends State<AddUserPage> {
    String tambon = '';
    String amphure = '';
 
+   String _selectedItem ='';
+
    Widget inputText( TextEditingController ctrl,String hintText,TextInputType textInputType){
     return Padding(
           padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
@@ -94,11 +96,25 @@ getProvincesData()async{
   searchSuggess = [];
   //sugg = [];
    readJsonObj = ReadJsonHelper();
-    searchSuggess = await readJsonObj!.getProvincesSuggess();
+    // searchSuggess = await readJsonObj!.getProvincesSuggess();
     
-    //print('setProvince obj${readJsonObj!.searchSuggess}');
-     print('setProvince $sugg');
-    print('setProvince $searchSuggess');
+    // //print('setProvince obj${readJsonObj!.searchSuggess}');
+    //  print('setProvince $sugg');
+    // print('setProvince $searchSuggess');
+   
+
+   
+    // setState(() {
+    // // sugg =searchSuggess;
+      
+    // });
+
+     searchSuggess = await  readJsonObj!.getOnlyProvincesSuggess();
+    _selectedItem = searchSuggess.first;
+    
+ 
+   
+    print('all user get Province $searchSuggess');
    
 
    
@@ -209,7 +225,8 @@ getProvincesData()async{
           String address = addressController.text;
           String tumbon =tumbonController.text;
           String aumpher =aumpherController.text;
-          String province =provinceController.text;
+          //String province =provinceController.text;
+          String province =_selectedItem;
           String postcode = postcodeController.text;
 
           UserModel userModel = UserModel(name: name, surname: surname, age: age, weight: weight, height: height, address: address, province: province, aumpher: aumpher, tumbon: tumbon, postcode: postcode);
@@ -260,44 +277,78 @@ getProvincesData()async{
               children: [
                 inputText(addressController,'ที่อยู่',TextInputType.text),
 
-               AutoCompleteTextField<String>(
-                key: key,
+              //  AutoCompleteTextField<String>(
+              //   key: key,
                 
-                clearOnSubmit: false,
-                suggestions: searchSuggess,
-                keyboardType: TextInputType.number,
-                controller: postcodeController,
-                decoration: InputDecoration(
-                  hintText: "$zip_code",
-                   border: OutlineInputBorder(),
+              //   clearOnSubmit: false,
+              //   suggestions: searchSuggess,
+              //   keyboardType: TextInputType.number,
+              //   controller: postcodeController,
+              //   decoration: InputDecoration(
+              //     hintText: "$zip_code",
+              //      border: OutlineInputBorder(),
                    
-                ),
-                itemFilter: (item, query) {
-                  return item.toLowerCase().startsWith(query.toLowerCase());
-                },
-                itemSorter: (a, b) {
-                  return a.compareTo(b);
-                },
-                itemSubmitted: (item) {
-                  // setState(() {
-                  //   //zip_code = item;
-                  //     postcodeController.text = item.split('/')[0];
-                  //     provinceController.text = item.split('/')[1];
-                  //     aumpherController.text = item.split('/')[2];
-                  //     tumbonController.text = item.split('/')[3];
-                  // });
-                },
-                itemBuilder: (context, item) {
-                  return ListTile(
-                    title: Text(item),
-                  );
-                },
-              ),
+              //   ),
+              //   itemFilter: (item, query) {
+              //     return item.toLowerCase().startsWith(query.toLowerCase());
+              //   },
+              //   itemSorter: (a, b) {
+              //     return a.compareTo(b);
+              //   },
+              //   itemSubmitted: (item) {
+              //     // setState(() {
+              //     //   //zip_code = item;
+              //     //     postcodeController.text = item.split('/')[0];
+              //     //     provinceController.text = item.split('/')[1];
+              //     //     aumpherController.text = item.split('/')[2];
+              //     //     tumbonController.text = item.split('/')[3];
+              //     // });
+              //   },
+              //   itemBuilder: (context, item) {
+              //     return ListTile(
+              //       title: Text(item),
+              //     );
+              //   },
+              // ),
 
+               Container(
+          width: double.infinity,
+  margin: const EdgeInsets.only(left: 0,right: 0,top: 4,bottom: 4),
+  padding: const EdgeInsets.all(8.0),
+  decoration: BoxDecoration(
+    border: Border.all(color: Colors.black45)
+  ),
+  child:Row(
+    children: [
+      Text('จังหวัด',style: TextStyle(fontSize: 14),),
+      SizedBox(width: 10,),
+          DropdownButton<String>(
+            value: _selectedItem,
+            items: searchSuggess.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedItem = newValue!;
+              });
+            },
+          ),
+
+
+    ],
+  ) 
+  
+),
+
+          
+                 inputText(aumpherController,'อำเภอ',TextInputType.text),
                  inputText(tumbonController,'ตำบล',TextInputType.text),
-                  inputText(aumpherController,'อำเภอ',TextInputType.text),
-                    inputText(provinceController,'จังหวัด',TextInputType.text),
-                      //  inputText(postcodeController,'รหัสไปรษณีย์'),
+                 
+                  //inputText(provinceController,'จังหวัด',TextInputType.text),
+                 inputText(postcodeController,'รหัสไปรษณีย์',TextInputType.number),
               
                  
 
@@ -307,9 +358,12 @@ getProvincesData()async{
             ),
           ),
           ),
+
+         
         
       ],
-    )
+    ),
+     SizedBox(height: 10,),
 
 
 
